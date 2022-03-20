@@ -1,0 +1,22 @@
+#!/usr/bin/perl -w
+
+use lib '/etc/perl';
+
+use CGI;
+use strict;
+use DB::PgSimple;
+use Data::Dumper;
+
+$Data::Dumper::Sortkeys = 1;
+
+my $db  = DB::PgSimple->new();
+my $cgi = CGI->new();
+
+my $file_name   = $ENV{REDIRECT_SCRIPT_FILENAME};
+my $remote_addr = $ENV{REDIRECT_REMOTE_ADDR};
+my $unique_id   = $ENV{UNIQUE_ID};
+
+my $buf = $cgi->header( -type => 'text/plain', -charset => 'UTF-8' );
+$buf   .= "There was an error.\nRef:  $unique_id";
+
+print $buf;
